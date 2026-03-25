@@ -3,7 +3,7 @@
 using namespace std;
 
 #define N 16
-#define M 10
+#define M 8
 
 int main(){
     double x[M][N];
