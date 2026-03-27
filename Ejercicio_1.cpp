@@ -36,34 +36,27 @@ int main(){
         y[0][i] = double(M);
 
         if (i < N/4) {
-            y[M-1][i] = 0.0
+            y[M-1][i] = 0.0;
         }
         else if (i >= N/4 && i < 3*N/8){
-
+            y[M-1][i] = double(i - N/4);
         }
-        else if (i >= 3*N/8 && i < N/2){
-
-        }
-        else if (i >= N/2 && i < 5*N/8){
-
+        else if (i >= 3*N/8 && i < 5*N/8){
+            y[M-1][i] = double(2*M/8);
         }
         else if (i >= 5*N/8 && i < 3*N/4){
-
+            y[M-1][i] = double(2*M/8 - (i - 5*N/8));
         }
-        else if (i >= 3*N/4 && i < 7*N/8){
-
+        else if (i >= 3*N/4 && i < N){
+            y[M-1][i] = 0.0;
         }
-        else if (i >= 7*N/8 && i < N){
-
-        }
-        y[M-1][i] = ;
     }
 
 
 
 
     for(int i=0; i<N; i++){
-        cout << x[0][i] << " ";
+        cout << y[M-1][i] << " ";
     }        
 }
 
