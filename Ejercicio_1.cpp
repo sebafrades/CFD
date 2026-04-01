@@ -1,16 +1,21 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
-#define N 16
-#define M 8
+using Matrix = vector<vector<double>>;
 
 // matrix creation function declaration
 vector<vector<double>> createMatrix(int rows, int cols, char type);
 
 // matrix iteration process function declaration
 vector<vector<double>> iterateMatrix(vector<vector<double>> matrix, double error);
+
+constexpr int N = 32;
+constexpr int M = 16;
+
+void saveMatrix(const Matrix& x, const Matrix& y, const std::string& filename);
 
 int main(){
 
@@ -20,14 +25,7 @@ int main(){
     vector<vector<double>> x_final = iterateMatrix(x, 1e-5);
     vector<vector<double>> y_final = iterateMatrix(y, 1e-5);
 
-
-    // visualization of matrix
-    for(int i=0; i<M+1; i++){
-        for(int j=0; j<N+1; j++){
-            cout << x_final[i][j] << " ";
-        }
-        cout << endl;
-    }
+    saveMatrix(x_final, y_final, "grid.csv");
 }
 
 // function definition
@@ -126,5 +124,20 @@ vector<vector<double>> iterateMatrix(vector<vector<double>> matrix, double error
     }
 
     return matrix;
+}
+
+void saveMatrix(const Matrix& x, const Matrix& y, const std::string& filename) {
+    std::ofstream file(filename);
+
+    int rows = x.size();
+    int cols = x[0].size();
+
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            file << x[i][j] << "," << y[i][j];
+            if (j < cols-1) file << ",";
+        }
+        file << "\n";
+    }
 }
 
