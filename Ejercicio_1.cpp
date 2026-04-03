@@ -7,10 +7,10 @@ using namespace std;
 using Matrix = vector<vector<double>>;
 
 // matrix creation function declaration
-vector<vector<double>> createMatrix(int rows, int cols, char type);
+Matrix createMatrix(int rows, int cols, char type);
 
 // matrix iteration process function declaration
-vector<vector<double>> iterateMatrix(vector<vector<double>> matrix, double error);
+void iterateMatrix(Matrix& matrix, double error);
 
 constexpr int N = 32;
 constexpr int M = 16;
@@ -19,19 +19,19 @@ void saveMatrix(const Matrix& x, const Matrix& y, const std::string& filename);
 
 int main(){
 
-    vector<vector<double>> x = createMatrix(M+1, N+1, 'x');
-    vector<vector<double>> y = createMatrix(M+1, N+1, 'y');
+    Matrix x = createMatrix(M+1, N+1, 'x');
+    Matrix y = createMatrix(M+1, N+1, 'y');
 
-    vector<vector<double>> x_final = iterateMatrix(x, 1e-5);
-    vector<vector<double>> y_final = iterateMatrix(y, 1e-5);
+    iterateMatrix(x, 1e-5);
+    iterateMatrix(y, 1e-5);
 
-    saveMatrix(x_final, y_final, "grid.csv");
+    saveMatrix(x, y, "grid.csv");
 }
 
 // function definition
-vector<vector<double>> createMatrix(int rows, int cols, char type) {
+Matrix createMatrix(int rows, int cols, char type) {
     
-    vector<vector<double>> matrix(rows, vector<double>(cols, 0.0));
+    Matrix matrix(rows, vector<double>(cols, 0.0));
 
     // valores iniciales
     for(int i=0; i<rows; i++){
@@ -91,9 +91,7 @@ vector<vector<double>> createMatrix(int rows, int cols, char type) {
     return matrix;
 }
 
-vector<vector<double>> iterateMatrix(vector<vector<double>> matrix, double error) {
-
-    vector<vector<double>> matrix_copy = matrix;
+void iterateMatrix(Matrix& matrix, double error) {
 
     double residual = 1.0;
 
@@ -123,7 +121,6 @@ vector<vector<double>> iterateMatrix(vector<vector<double>> matrix, double error
         //cout << "Residual: " << residual << endl;
     }
 
-    return matrix;
 }
 
 void saveMatrix(const Matrix& x, const Matrix& y, const std::string& filename) {
