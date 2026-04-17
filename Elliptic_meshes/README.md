@@ -70,34 +70,6 @@ The resulting mesh shows smoother spacing and better quality near the geometry c
 
 ---
 
-## Why this matters (CFD context)
-
-Mesh quality is critical in CFD because:
-
-* Numerical accuracy depends on grid resolution and smoothness
-* Poor meshes can lead to unstable or incorrect solutions
-* Structured elliptic meshes provide better control over grid quality
-
----
-
-## Limitations
-
-* Simple geometry (toy problem)
-* No boundary clustering control
-* No advanced solvers (e.g., SOR, multigrid)
-* Not optimized for performance
-
----
-
-## Possible Improvements
-
-* Add control functions for clustering near the bump
-* Implement faster solvers (SOR / multigrid)
-* Export to VTK for visualization in ParaView
-* Extend to more complex geometries
-
----
-
 ## Author
 
 Sebastián Frades
