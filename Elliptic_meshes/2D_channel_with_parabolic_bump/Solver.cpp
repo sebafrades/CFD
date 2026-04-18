@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
@@ -66,8 +67,13 @@ Matrix createMatrix(int rows, int cols, char type) {
                 if (i < N/4) {
                     matrix[rows-1][i] = 0.0;
                 }
-                else if (i >= N/4 && & i < 3*N/4){
-                    matrix[rows-1][i] = 0.25 * pow((double(i) - double(N)/4), 2.0);
+                else if (i >= N/4 && i <= 3*N/4){
+                    double xc = double(N) / 2.0;
+                    double half_width = double(N) / 4.0;
+                    double H = double(M) / 4.0;  // height = 2a
+
+                    double xi = double(i);
+                    matrix[rows-1][i] = H * (1.0 - pow((xi - xc) / half_width, 2.0));
                 }
                 else if (i >= 3*N/4 && i < N){
                     matrix[rows-1][i] = 0.0;
