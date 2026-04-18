@@ -1,4 +1,4 @@
-# Elliptic Mesh Generation – Bump Case
+# 2D channel with a trapezoidal bump (benchmark geometry)
 
 This project implements a simple **elliptic grid generation method** in C++ and visualizes the resulting mesh using Python. The case consists of a 2D domain with a small geometric bump, serving as a basic exercise in structured mesh generation for CFD applications.
 
