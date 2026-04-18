@@ -66,14 +66,8 @@ Matrix createMatrix(int rows, int cols, char type) {
                 if (i < N/4) {
                     matrix[rows-1][i] = 0.0;
                 }
-                else if (i >= N/4 && i < 3*N/8){
-                    matrix[rows-1][i] = double(i - N/4);
-                }
-                else if (i >= 3*N/8 && i < 5*N/8){
-                    matrix[rows-1][i] = double(2*M/8);
-                }
-                else if (i >= 5*N/8 && i < 3*N/4){
-                    matrix[rows-1][i] = double(2*M/8 - (i - 5*N/8));
+                else if (i >= N/4 && & i < 3*N/4){
+                    matrix[rows-1][i] = 0.25 * pow((double(i) - double(N)/4), 2.0);
                 }
                 else if (i >= 3*N/4 && i < N){
                     matrix[rows-1][i] = 0.0;
