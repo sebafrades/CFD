@@ -10,7 +10,7 @@ using Matrix = vector<vector<double>>;
 Matrix createMatrix(int rows, int cols, char type);
 
 // matrix iteration process function declaration
-void iterateMatrix(Matrix& matrix, double error);
+void iterateMatrix(Matrix& x, Matrix& y,double error);
 
 constexpr int N = 32;
 constexpr int M = 16;
@@ -22,8 +22,7 @@ int main(){
     Matrix x = createMatrix(M+1, N+1, 'x');
     Matrix y = createMatrix(M+1, N+1, 'y');
 
-    iterateMatrix(x, 1e-5);
-    iterateMatrix(y, 1e-5);
+    iterateMatrix(x, y, 1e-5);
 
     saveMatrix(x, y, "grid.csv");
 }
@@ -91,12 +90,12 @@ Matrix createMatrix(int rows, int cols, char type) {
     return matrix;
 }
 
-void iterateMatrix(Matrix& matrix, double error) {
+void iterateMatrix(Matrix& x, Matrix& y,double error) {
 
     double residual = 1.0;
 
-    int rows = matrix.size();
-    int cols = matrix[0].size();
+    int rows = x.size();
+    int cols = x[0].size();
 
     while (residual > error){
 
@@ -104,17 +103,30 @@ void iterateMatrix(Matrix& matrix, double error) {
 
         for (int i = 1; i < rows-1; i++){
             for (int j = 1; j < cols-1; j++){
+                
+                double x_eta = (x[i+1][j] - x[i-1][j])/2;
+                double x_xi = (x[i][j+1] - x[i][j-1])/2;
+                double y_eta = (y[i+1][j] - y[i-1][j])/2;
+                double y_xi = (y[i][j+1] - y[i][j-1])/2;
 
-                double new_val = (matrix[i-1][j] + matrix[i+1][j] +
-                                matrix[i][j-1] + matrix[i][j+1]) / 4.0;
+                double x_xi_eta = 0.25*(x[i+1][j+1] - x[i+1][j-1] - x[i-1][j+1] + x[i-1][j-1]);
+                double y_xi_eta = 0.25*(y[i+1][j+1] - y[i+1][j-1] - y[i-1][j+1] + y[i-1][j-1]);
 
-                double diff = abs(new_val - matrix[i][j]);
+                double alpha = (x_eta)*(x_eta) + (y_eta)*(y_eta);
+                double beta = (x_xi*x_eta) + (y_xi*y_eta);
+                double gamma = (x_xi)*(x_xi) + (y_xi)*(y_xi);
+
+                double x_new_val = (2*beta*x_xi_eta - alpha*(x[i][j+1]+x[i][j-1]) - gamma*(x[i+1][j]+x[i-1][j]))/(-2*(alpha+gamma));
+                double y_new_val = (2*beta*y_xi_eta - alpha*(y[i][j+1]+y[i][j-1]) - gamma*(y[i+1][j]+y[i-1][j]))/(-2*(alpha+gamma));
+
+                double diff = abs(x_new_val - x[i][j]);
 
                 if (diff > residual){
                     residual = diff;
                 }
 
-                matrix[i][j] = new_val;
+                x[i][j] = x_new_val;
+                y[i][j] = y_new_val;
             }
         }
 
