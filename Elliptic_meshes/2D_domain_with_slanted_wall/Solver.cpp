@@ -118,8 +118,8 @@ void iterateMatrix(Matrix& x, Matrix& y,double error) {
                 double J = x_xi*y_eta - x_eta*y_xi;
                 double P = (2*x_eta*x_xi_eta)/(x_eta*x_eta + y_eta*y_eta);
 
-                double x_new_val = (-J*J*P*x_xi + 2*beta*x_xi_eta - alpha*(x[i][j+1]+x[i][j-1]) - gamma*(x[i+1][j]+x[i-1][j]))/(-2*(alpha+gamma));
-                double y_new_val = (-J*J*P*x_xi + 2*beta*y_xi_eta - alpha*(y[i][j+1]+y[i][j-1]) - gamma*(y[i+1][j]+y[i-1][j]))/(-2*(alpha+gamma));
+                double x_new_val = (-pow(J,2)*P*x_xi + 2*beta*x_xi_eta - alpha*(x[i][j+1]+x[i][j-1]) - gamma*(x[i+1][j]+x[i-1][j]))/(-2*(alpha+gamma));
+                double y_new_val = (-pow(J,2)*P*y_xi + 2*beta*y_xi_eta - alpha*(y[i][j+1]+y[i][j-1]) - gamma*(y[i+1][j]+y[i-1][j]))/(-2*(alpha+gamma));
 
                 double diff = abs(x_new_val - x[i][j]);
 
