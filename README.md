@@ -5,13 +5,12 @@ This repository contains a set of CFD exercises and implementations written main
 ## What’s in here
 
 * Elliptic mesh generation (Laplace / Poisson)
+* MRCVC: a project of meshing the combustion chamber of a rotary combustion engine developed by a former professor of my University.
 * Classical unsteady problems:
 
   * Second Stokes problem
   * Transient Poiseuille flow
   * Transient Burgers equation
-*MRCVC: a project of meshing the combustion chamber of a rotary combustion engine developed by a former professor of my University. 
-
 
 All solvers are written in C++, and results are post-processed with Python.
 
