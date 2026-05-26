@@ -14,16 +14,6 @@ This repository contains a set of CFD exercises and implementations written main
 
 All solvers are written in C++, and results are post-processed with Python.
 
-## Approach
-
-The focus is on:
-
-* writing the numerical methods directly
-* keeping the code simple and readable
-* understanding convergence, stability, and boundary conditions
-
-This is not meant to be production code — it’s closer to a numerical lab notebook.
-
 ## Author
 
 Sebastián Frades
