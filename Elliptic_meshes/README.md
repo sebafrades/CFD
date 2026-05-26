@@ -1,4 +1,4 @@
-#Elliptic meshes
+# Elliptic Meshes
 
 Structured mesh generation for 2D domains, covering algebraic and elliptic methods, iterative solvers, and convergence analysis.
 
