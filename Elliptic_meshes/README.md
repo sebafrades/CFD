@@ -1,3 +1,5 @@
+#Elliptic meshes
+
 Structured mesh generation for 2D domains, covering algebraic and elliptic methods, iterative solvers, and convergence analysis.
 
 TP6 — Algebraic and Elliptic Meshes in Channel Domains
