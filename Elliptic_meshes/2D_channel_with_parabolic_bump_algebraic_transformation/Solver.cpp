@@ -25,18 +25,14 @@ int main(){
     saveMatrix(x, y, "grid.csv");
 }
 
-// -----------------------------
 // Algebraic stretching function
-// -----------------------------
 double algebraicFunction(double i) {
     double K = 1.0864;
     int L = 17;
     return (pow(K,i-1) - 1.0)/(pow(K,L-1) - 1.0);
 }
 
-// -----------------------------
 // Boundary generation
-// -----------------------------
 Matrix createMatrix(int rows, int cols, char type) {
 
     Matrix matrix(rows, vector<double>(cols, 0.0));
@@ -53,7 +49,8 @@ Matrix createMatrix(int rows, int cols, char type) {
                 x_val = 1.0 * (1.0 - s);
             }
             else if (j < 49){
-                x_val = 1.0 + (double(j - 17)/32.0);
+                int idx = j + 1;
+                x_val = 1.0 + (double(idx - 17)/32.0);
             }
             else{
                 int idx = j + 1;
@@ -88,8 +85,8 @@ Matrix createMatrix(int rows, int cols, char type) {
             }
             else if (j < 49){
 
-                // reconstruct x consistently
-                double x_val = 1.0 + (double(j - 17)/32.0);
+                // x value corresponding to the j-th column
+                double x_val = 1.0 + (double(j + 1 - 17)/32.0);
 
                 double xc = 1.5;
                 double half_width = 0.5;
@@ -116,9 +113,7 @@ Matrix createMatrix(int rows, int cols, char type) {
     return matrix;
 }
 
-// -----------------------------
 // Elliptic solver with P,Q
-// -----------------------------
 void iterateMatrix(Matrix& x, Matrix& y, double error) {
 
     int rows = x.size();
@@ -136,7 +131,7 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
 
         residual = 0.0;
 
-        // ---- Phi (top & bottom)
+        // Phi (top & bottom)
         for (int j = 1; j < cols-1; j++){
             for (int i : {0, rows-1}){
 
@@ -152,7 +147,7 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
             }
         }
 
-        // ---- Psi (left & right)
+        // Psi (left & right)
         for (int i = 1; i < rows-1; i++){
             for (int j : {0, cols-1}){
 
@@ -168,7 +163,7 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
             }
         }
 
-        // ---- Interpolation
+        // Interpolation
         for (int i = 1; i < rows-1; i++){
             for (int j = 1; j < cols-1; j++){
 
@@ -180,7 +175,7 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
             }
         }
 
-        // ---- Main iteration
+        // Main iteration
         for (int i = 1; i < rows-1; i++){
             for (int j = 1; j < cols-1; j++){
 
@@ -201,8 +196,8 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
 
                 double J = x_xi*y_eta - x_eta*y_xi;
 
-                double P = damping * Phi[i][j] * (x_xi*x_xi + y_xi*y_xi);
-                double Q = damping * Psi[i][j] * (x_eta*x_eta + y_eta*y_eta);
+                double P = damping * Phi[i][j] * alpha / (J*J + 1e-12);
+                double Q = damping * Psi[i][j] * gamma / (J*J + 1e-12);
 
                 double x_new = (
                     2*beta*x_xi_eta
@@ -230,7 +225,7 @@ void iterateMatrix(Matrix& x, Matrix& y, double error) {
     }
 }
 
-// -----------------------------
+// To save the grid to a CSV file for visualization
 void saveMatrix(const Matrix& x, const Matrix& y, const std::string& filename) {
     ofstream file(filename);
 

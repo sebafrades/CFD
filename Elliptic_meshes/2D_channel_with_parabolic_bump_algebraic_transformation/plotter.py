@@ -1,11 +1,18 @@
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
+# path to folder containing this script
+script_dir = Path(__file__).parent
+
+# full path to grid.csv
+csv_path = script_dir / "grid.csv"
+
 # load CSV
-data = np.loadtxt("grid.csv", delimiter=",")
+data = np.loadtxt(csv_path, delimiter=",")
 
 rows, cols2 = data.shape
-cols = cols2 // 2  # because we stored (x,y) pairs
+cols = cols2 // 2
 
 # reconstruct X and Y matrices
 X = np.zeros((rows, cols))
