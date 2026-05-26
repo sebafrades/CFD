@@ -12,5 +12,4 @@ Applies elliptic equations to generate meshes in two channel geometries: one wit
 Now, we use a Poisson equation to create a mesh on a trapezoidal domain. This source terms controls mesh clustering. 
 
 ## Poisson Meshes in Channel Domain
-Generates meshes for a 2D duct with a parabolic bump using a Poisson (P,Q≠0P,Q \neq 0
-P,Q=0) equation. Besides, boundary nodes use an algebraic wall-normal clustering. 
+Generates meshes for a 2D duct with a parabolic bump using a Poisson equation. Besides, boundary nodes use an algebraic wall-normal clustering. 
