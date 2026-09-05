@@ -1,0 +1,52 @@
+#ifndef FV_CELL_H
+#define FV_CELL_H
+
+#include<vector>
+
+class FV_Cell {
+public:
+    FV_Cell(double x_lef_sup, double y_lef_sup, double x_rig_sup, double y_rig_sup, //constructor
+            double x_lef_inf, double y_lef_inf, double x_rig_inf, double y_rig_inf)
+        : x_lef_sup(x_lef_sup), y_lef_sup(y_lef_sup),
+          x_rig_sup(x_rig_sup), y_rig_sup(y_rig_sup),
+          x_lef_inf(x_lef_inf), y_lef_inf(y_lef_inf),
+          x_rig_inf(x_rig_inf), y_rig_inf(y_rig_inf) {}
+
+    double centroid_x() const {
+        return 0.25 * (x_lef_sup + x_rig_sup + x_lef_inf + x_rig_inf);
+    }
+    double centroid_y() const {
+        return 0.25 * (y_lef_sup + y_rig_sup + y_lef_inf + y_rig_inf);
+    }
+
+    double area() const {
+        std::vector<double> b = {x_rig_inf - x_lef_sup, y_rig_inf - y_lef_sup};
+        std::vector<double> d = {x_rig_sup - x_lef_inf, y_rig_sup - y_lef_inf};
+        return 0.5 * (b[0] * d[1] - b[1] * d[0]);
+    }
+
+    double delta_x_lef() const { return x_lef_sup - x_lef_inf; }
+    double delta_x_rig() const { return x_rig_sup - x_rig_inf; }
+    double delta_x_inf() const { return x_rig_inf - x_lef_inf; }
+    double delta_x_sup() const { return x_rig_sup - x_lef_sup; }
+
+    double delta_y_lef() const { return y_lef_sup - y_lef_inf; }
+    double delta_y_rig() const { return y_rig_sup - y_rig_inf; }    
+    double delta_y_inf() const { return y_rig_inf - y_lef_inf; }
+    double delta_y_sup() const { return y_rig_sup - y_lef_sup; }
+
+private:
+    double x_lef_sup;
+    double y_lef_sup;
+
+    double x_rig_sup;
+    double y_rig_sup;
+
+    double x_lef_inf;
+    double y_lef_inf;
+
+    double x_rig_inf;
+    double y_rig_inf;
+};
+
+#endif // FV_CELL_H
