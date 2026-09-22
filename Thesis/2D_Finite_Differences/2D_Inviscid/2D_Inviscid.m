@@ -4,15 +4,15 @@ h=1;
 N=8;
 deltax=h/N;
 
-% Relación L1/h
+% RelaciÃ³n L1/h
 
 R1=1.25;
 
-% Relación H/h
+% RelaciÃ³n H/h
 
 R2=1.75;
 
-% Relación L2/h
+% RelaciÃ³n L2/h
 
 R3=1;
 
