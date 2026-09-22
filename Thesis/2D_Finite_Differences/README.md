@@ -1,8 +1,3 @@
----
-
-### 2. `README.md` for `2D_FiniteDifferences/` (Custom Finite Difference Codes)
-
-```markdown
 # 2D Finite Difference Modules (Custom Codes)
 
 This directory contains custom implementations based on the **finite difference method** to solve two-dimensional flows through sudden symmetric expansions[cite: 1].
