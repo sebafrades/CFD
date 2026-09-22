@@ -1,0 +1,14 @@
+{
+    "label": "Build solver",
+    "type": "shell",
+    "command": "g++",
+    "args": [
+        "-I", "../../Mesh_generation/Poisson_2D_channel_parabolic_bump",
+        "solver.cpp",
+        "../../Mesh_generation/Poisson_2D_channel_parabolic_bump/Finite_Differences_Mesh.cpp",
+        "../../Mesh_generation/Poisson_2D_channel_parabolic_bump/FV_mesh_builder.cpp",
+        "-o", "solver.exe"
+    ],
+    "group": "build",
+    "problemMatcher": ["$gcc"]
+}
