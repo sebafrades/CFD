@@ -1,0 +1,76 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    inlet
+    {
+	type		codedFixedValue;
+	value		$internalField;
+	name	myParabolicVelocity;
+	code
+	#{
+		scalar U_ave = 1;
+
+		const fvPatch& boundaryPatch = patch();
+		vectorField& field = *this;
+
+				forAll(boundaryPatch, faceI)
+
+	{
+	field[faceI] = vector( U_ave*(-8 +12*Foam::pow(boundaryPatch.Cf()[faceI].y(),1)-4*Foam::pow(boundaryPatch.Cf()[faceI].y(),2) ),0,0);
+	}
+	
+
+	#};    
+		codeOptions
+	#{
+	
+		-I$(LIB_SRC)/finiteVolume/lnInclude \
+		-I$(LIB_SRC)/meshTools/lnInclude
+	#};
+
+	codeInclude
+	#{
+		#include "fvCFD.H"
+		#include <cmath>
+		#include <iostream>
+	#};
+    }
+
+
+    outlet
+    {
+	type		zeroGradient;
+    }
+
+    walls
+    {
+	type 		noSlip;
+    }
+
+    frontAndBack
+    {
+	type		empty;
+    }
+
+}
+
+// ************************************************************************ //
