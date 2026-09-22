@@ -1,0 +1,234 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 0.01;
+
+r 0.5;
+R 1;
+z_step 15;
+z_end 30;
+
+r_sqr	#calc	"$r*0.424264";
+i_sqr	#calc	"$r_sqr*0.707107";
+
+r_minor	#calc	"$r*0.848528";
+i_minor	#calc	"$r_minor*0.707107";
+
+i_r	#calc	"$r*0.707107";
+
+i_R	#calc	"$R*0.707107";
+
+// Versiones negadas, calculadas una sola vez (reemplazan a "#neg $var")
+n_i_sqr    #calc "-1.0*$i_sqr";
+n_i_minor  #calc "-1.0*$i_minor";
+n_i_r      #calc "-1.0*$i_r";
+n_i_R      #calc "-1.0*$i_R";
+n_r_minor  #calc "-1.0*$r_minor";
+n_r        #calc "-1.0*$r";
+n_R        #calc "-1.0*$R";
+
+vertices
+(
+    //Inlet
+    (0 0 0) //0
+    ($i_sqr $i_sqr 0)
+    ($n_i_sqr $i_sqr 0)
+    ($n_i_sqr $n_i_sqr 0)
+    ($i_sqr $n_i_sqr 0)
+    ($i_minor $i_minor 0) //5
+    ($n_i_minor $i_minor 0)
+    ($n_i_minor $n_i_minor 0)
+    ($i_minor $n_i_minor 0)
+    ($i_r $i_r 0) //9
+    ($n_i_r $i_r 0)
+    ($n_i_r $n_i_r 0)
+    ($i_r $n_i_r 0) //12
+
+    //Step face
+    (0 0 $z_step) //13
+    ($i_sqr $i_sqr $z_step) //14
+    ($n_i_sqr $i_sqr $z_step)
+    ($n_i_sqr $n_i_sqr $z_step)
+    ($i_sqr $n_i_sqr $z_step)
+    ($i_minor $i_minor $z_step) //18
+    ($n_i_minor $i_minor $z_step)
+    ($n_i_minor $n_i_minor $z_step)
+    ($i_minor $n_i_minor $z_step)
+    ($i_r $i_r $z_step) //22
+    ($n_i_r $i_r $z_step)
+    ($n_i_r $n_i_r $z_step)
+    ($i_r $n_i_r $z_step)
+    ($i_R $i_R $z_step) //26
+    ($n_i_R $i_R $z_step)
+    ($n_i_R $n_i_R $z_step)
+    ($i_R $n_i_R $z_step)
+
+    //Outlet
+    (0 0 $z_end) //30
+    ($i_sqr $i_sqr $z_end) //31
+    ($n_i_sqr $i_sqr $z_end)
+    ($n_i_sqr $n_i_sqr $z_end)
+    ($i_sqr $n_i_sqr $z_end)
+    ($i_minor $i_minor $z_end) //30
+    ($n_i_minor $i_minor $z_end)
+    ($n_i_minor $n_i_minor $z_end)
+    ($i_minor $n_i_minor $z_end)
+    ($i_r $i_r $z_end) //39
+    ($n_i_r $i_r $z_end)
+    ($n_i_r $n_i_r $z_end)
+    ($i_r $n_i_r $z_end)
+    ($i_R $i_R $z_end) //43
+    ($n_i_R $i_R $z_end)
+    ($n_i_R $n_i_R $z_end)
+    ($i_R $n_i_R $z_end)
+);
+
+blocks
+(
+    hex (1 2 3 4 14 15 16 17) 		(10 10 150) simpleGrading (1 1 1)
+    hex (14 15 16 17 31 32 33 34) 	(10 10 150) simpleGrading (1 1 1)
+
+    hex (1 5 6 2 14 18 19 15) 		(10 10 150) simpleGrading (1 1 1)
+    hex (14 18 19 15 31 35 36 32) 	(10 10 150) simpleGrading (1 1 1)
+    hex (2 6 7 3 15 19 20 16) 		(10 10 150) simpleGrading (1 1 1)
+    hex (15 19 20 16 32 36 37 33) 	(10 10 150) simpleGrading (1 1 1)
+    hex (3 7 8 4 16 20 21 17) 		(10 10 150) simpleGrading (1 1 1)
+    hex (16 20 21 17 33 37 38 34) 	(10 10 150) simpleGrading (1 1 1)
+    hex (4 8 5 1 17 21 18 14)		(10 10 150) simpleGrading (1 1 1)
+    hex (17 21 18 14 34 38 35 31) 	(10 10 150) simpleGrading (1 1 1)
+
+    hex (5 9 10 6 18 22 23 19) 		(10 10 150) simpleGrading (1 1 1)
+    hex (18 22 23 19 35 39 40 36) 	(10 10 150) simpleGrading (1 1 1)
+    hex (6 10 11 7 19 23 24 20) 	(10 10 150) simpleGrading (1 1 1)
+    hex (19 23 24 20 36 40 41 37) 	(10 10 150) simpleGrading (1 1 1)
+    hex (7 11 12 8 20 24 25 21) 	(10 10 150) simpleGrading (1 1 1)
+    hex (20 24 25 21 37 41 42 38) 	(10 10 150) simpleGrading (1 1 1)
+    hex (8 12 9 5 21 25 22 18) 		(10 10 150) simpleGrading (1 1 1)
+    hex (21 25 22 18 38 42 39 35) 	(10 10 150) simpleGrading (1 1 1)
+
+    hex (22 26 27 23 39 43 44 40) 	(10 10 150) simpleGrading (1 1 1)
+    hex (23 27 28 24 40 44 45 41) 	(10 10 150) simpleGrading (1 1 1)
+    hex (24 28 29 25 41 45 46 42) 	(10 10 150) simpleGrading (1 1 1)
+    hex (25 29 26 22 42 46 43 39) 	(10 10 150) simpleGrading (1 1 1)
+);
+
+edges
+(
+    arc 5 6 (0 $r_minor 0)
+    arc 6 7 ($n_r_minor 0 0)
+    arc 7 8 (0 $n_r_minor 0)
+    arc 8 5 ($r_minor 0 0)
+    arc 9 10 (0 $r 0)
+    arc 10 11 ($n_r 0 0)
+    arc 11 12 (0 $n_r 0)
+    arc 12 9 ($r 0 0)
+
+    arc 18 19 (0 $r_minor $z_step)
+    arc 19 20 ($n_r_minor 0 $z_step)
+    arc 20 21 (0 $n_r_minor $z_step)
+    arc 21 18 ($r_minor 0 $z_step)
+    arc 22 23 (0 $r $z_step)
+    arc 23 24 ($n_r 0 $z_step)
+    arc 24 25 (0 $n_r $z_step)
+    arc 25 22 ($r 0 $z_step)
+    arc 26 27 (0 $R $z_step)
+    arc 27 28 ($n_R 0 $z_step)
+    arc 28 29 (0 $n_R $z_step)
+    arc 29 26 ($R 0 $z_step)
+
+    arc 35 36 (0 $r_minor $z_end)
+    arc 36 37 ($n_r_minor 0 $z_end)
+    arc 37 38 (0 $n_r_minor $z_end)
+    arc 38 35 ($r_minor 0 $z_end)
+    arc 39 40 (0 $r $z_end)
+    arc 40 41 ($n_r 0 $z_end)
+    arc 41 42 (0 $n_r $z_end)
+    arc 42 39 ($r 0 $z_end)
+    arc 43 44 (0 $R $z_end)
+    arc 44 45 ($n_R 0 $z_end)
+    arc 45 46 (0 $n_R $z_end)
+    arc 46 43 ($R 0 $z_end)
+);
+
+boundary
+(
+    inlet
+    {
+	type patch;
+	faces
+	(
+	   (1 2 6 5)
+	   (2 3 7 6)
+	   (3 4 8 7)
+	   (1 5 8 4)
+	   (1 4 3 2)
+	   (10 9 5 6)
+	   (10 6 7 11)
+	   (7 8 12 11)
+	   (5 9 12 8)
+	);
+    }
+
+    outlet
+    {
+        type patch;
+        faces
+	(
+	   (31 32 33 34)
+	   (31 35 36 32)
+	   (32 36 37 33)
+	   (33 37 38 34)
+	   (34 38 35 31)
+	   (35 39 40 36)
+	   (36 40 41 37)
+	   (37 41 42 38)
+	   (38 42 39 35)
+	   (39 43 44 40)
+	   (44 45 41 40)
+	   (41 45 46 42)
+	   (42 46 43 39)
+	);
+     }
+
+     fixedWalls
+     {
+	type wall;
+	faces
+	(
+	   (9 22 23 10)
+	   (10 23 24 11)
+	   (11 24 25 12)
+	   (12 25 22 9)
+
+	   (22 26 27 23)
+	   (23 27 28 24)
+	   (24 28 29 25)
+	   (25 29 26 22)
+
+	   (26 43 44 27)
+	   (27 44 45 28)
+	   (28 45 46 29)
+	   (29 46 43 26)
+	);
+     }
+);
+
+mergePatchPairs
+(
+);
+//
+
+
+// ************************************************************************* //
