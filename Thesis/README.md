@@ -2,9 +2,8 @@
 
 This repository contains the code, simulated case configurations, and the complete thesis document for the Professional Integrative Project submitted for the degree of **Mechanical Engineer** at the National University of Comahue (Neuquén, Argentina, 2024).
 
-* **Author:** Sebastián Alexis Frades
+* **Author:** Sebastián Frades
 * **Advisor:** Dr. Ricardo Adolfo Prado
-* **Collaborator:** Dr. Ezequiel López
 
 ---
 
@@ -36,7 +35,7 @@ The project emphasizes **verification** and **validation** of computational mode
 
 ```text
 .
-├── 2D_FiniteDifferences/   # Custom C++/Python/MATLAB codes for finite differences (potential, psi-zeta, multigrid)
+├── 2D_Finite_Differences/   # Custom C++/Python/MATLAB codes for finite differences (potential, psi-zeta, multigrid)
 ├── OpenFOAM/
 │   ├── Laminar_2D/        # OpenFOAM cases using icoFoam (benchmarked against finite differences)
 │   ├── Turbulent_3D/      # RANS cases using k-epsilon and k-omega models
