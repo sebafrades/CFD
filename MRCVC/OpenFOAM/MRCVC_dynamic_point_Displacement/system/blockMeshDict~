@@ -1,0 +1,142 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+/*--------------------------------*- C++ -*----------------------------------*\
+  OpenFOAM: The Open Source CFD Toolbox - blockMeshDict
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+
+//#include "meshParameters"
+gamma 80;
+R 116.1;
+r 44.1;
+
+// Derived quantities
+R_ext #calc "sqrt($R*$R + 3*$r*$r)";
+R_int #calc "sqrt($R*$R - $r*$r)";
+
+// Angles (degrees)
+beta  #calc "radToDeg(atan($R_int/$r))";
+alpha #calc "radToDeg(asin($r/$R))";
+eta   #calc "radToDeg(asin(($r/$R_ext)*sin(degToRad(180-$beta))))"; 
+
+vertices
+(
+    // ===== z = 0 =====
+    // Vertex 0 (Bottom-Left)
+    (
+        #calc "$R*cos(degToRad($gamma)) + $R*cos(degToRad(90+$alpha))"
+        #calc "$R*sin(degToRad($gamma)) - $R_int + $R*sin(degToRad(90+$alpha))"
+        0
+    )
+    // Vertex 1 (Bottom-Right)
+    (
+        #calc "$R*cos(degToRad($gamma)) + $R*cos(degToRad(90-$alpha))"
+        #calc "$R*sin(degToRad($gamma)) - $R_int + $R*sin(degToRad(90-$alpha))"
+        0
+    )
+    // Vertex 2 (Top-Right)
+    (
+        #calc "$R_ext*cos(degToRad($gamma - $eta))"
+        #calc "$R_ext*sin(degToRad($gamma - $eta))"
+        0
+    )
+    // Vertex 3 (Top-Left)
+    (
+        #calc "$R_ext*cos(degToRad($gamma + $eta))"
+        #calc "$R_ext*sin(degToRad($gamma + $eta))"
+        0
+    )
+
+    // ===== z = 1 =====
+    // 4, 5, 6, 7 (Offset by z=1)
+    ( #calc "$R*cos(degToRad($gamma)) + $R*cos(degToRad(90+$alpha))" #calc "$R*sin(degToRad($gamma)) - $R_int + $R*sin(degToRad(90+$alpha))" 1 )
+    ( #calc "$R*cos(degToRad($gamma)) + $R*cos(degToRad(90-$alpha))" #calc "$R*sin(degToRad($gamma)) - $R_int + $R*sin(degToRad(90-$alpha))" 1 )
+    ( #calc "$R_ext*cos(degToRad($gamma - $eta))" #calc "$R_ext*sin(degToRad($gamma - $eta))" 1 )
+    ( #calc "$R_ext*cos(degToRad($gamma + $eta))" #calc "$R_ext*sin(degToRad($gamma + $eta))" 1 )
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (100 100 1) simpleGrading (1 1 1)
+);
+
+edges
+(
+    // --- Bottom Edge (0 to 1) ---
+    // Arc centered at (R*cos(gamma), R*sin(gamma) - R_int) with radius R
+    arc 0 1 (
+        #calc "$R*cos(degToRad($gamma))" 
+        #calc "$R*sin(degToRad($gamma)) - $R_int + $R" 
+        0
+    )
+    arc 4 5 (
+        #calc "$R*cos(degToRad($gamma))" 
+        #calc "$R*sin(degToRad($gamma)) - $R_int + $R" 
+        1
+    )
+
+    // --- Right Edge (1 to 2) ---
+    // Arc centered at (R*cos(gamma), R*sin(gamma)) with radius r
+    // Interpolation point at the midpoint of the angle range [0, gamma - beta]
+    arc 1 2 (
+        #calc "$R*cos(degToRad($gamma)) + $r*cos(degToRad(($gamma - $beta)/2.0))"
+        #calc "$R*sin(degToRad($gamma)) + $r*sin(degToRad(($gamma - $beta)/2.0))"
+        0
+    )
+    arc 5 6 (
+        #calc "$R*cos(degToRad($gamma)) + $r*cos(degToRad(($gamma - $beta)/2.0))"
+        #calc "$R*sin(degToRad($gamma)) + $r*sin(degToRad(($gamma - $beta)/2.0))"
+        1
+    )
+
+    // --- Top Edge (2 to 3) ---
+    // Arc centered at (0,0) with radius R_ext
+    arc 2 3 (
+        #calc "$R_ext*cos(degToRad($gamma))"
+        #calc "$R_ext*sin(degToRad($gamma))"
+        0
+    )
+    arc 6 7 (
+        #calc "$R_ext*cos(degToRad($gamma))"
+        #calc "$R_ext*sin(degToRad($gamma))"
+        1
+    )
+
+    // --- Left Edge (3 to 0) ---
+    // Arc centered at (R*cos(gamma), R*sin(gamma)) with radius r
+    // Interpolation point at midpoint of angle range [beta + gamma, 180]
+    arc 3 0 (
+        #calc "$R*cos(degToRad($gamma)) + $r*cos(degToRad(($beta + $gamma + 180.0)/2.0))"
+        #calc "$R*sin(degToRad($gamma)) + $r*sin(degToRad(($beta + $gamma + 180.0)/2.0))"
+        0
+    )
+    arc 7 4 (
+        #calc "$R*cos(degToRad($gamma)) + $r*cos(degToRad(($beta + $gamma + 180.0)/2.0))"
+        #calc "$R*sin(degToRad($gamma)) + $r*sin(degToRad(($beta + $gamma + 180.0)/2.0))"
+        1
+    )
+);
+
+boundary
+(
+    inlet { type patch; faces ((1 2 6 5)); }
+    outlet { type patch; faces ((0 4 7 3)); }
+    upperWall { type wall; faces ((3 7 6 2)); }
+    lowerWall { type wall; faces ((0 1 5 4)); }
+    front { type empty; faces ((4 5 6 7)); }
+    back { type empty; faces ((0 3 2 1)); }
+);
+
+
+// ************************************************************************* //
