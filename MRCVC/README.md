@@ -35,6 +35,13 @@ Before coupling complex reacting flows or turbulence models, current numerical e
 
 ---
 
+## 🐍 Python Prototyping (`MRCVCLaplaceMeshingDynamic.py`)
+
+In addition to OpenFOAM cases, this directory includes `MRCVCLaplaceMeshingDynamic.py`, a standalone Python script used to prototype and visualize 2D structured mesh generation and deformation.
+
+* **Methodology:** Discretizes Laplace's boundary value problem ($\nabla^2 x = 0, \nabla^2 y = 0$) using finite differences to smoothly distribute interior grid nodes based on moving rotor boundary profiles.
+* **Purpose:** Serves as a fast numerical benchmark to verify boundary kinematics, node trajectories, and coordinate mapping before deploying full 3D OpenFOAM simulations.
+
 ## 📂 Minimal Case Structure (Mesh Motion Testing)
 
 To keep the repository clean and lightweight during this testing phase, only the essentials required to execute `moveDynamicMesh` are included:
