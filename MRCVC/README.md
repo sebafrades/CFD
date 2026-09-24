@@ -44,10 +44,9 @@ MRCVC/
 ├── 0/
 │   └── pointDisplacement    # Motion boundary condition definitions
 ├── constant/
-│   ├── dynamicMeshDict      # Motion solver specifications (Laplacian)
-│   └── polyMesh/
-│       └── blockMeshDict    # Parametric mesh geometry definition
+│   └── dynamicMeshDict      # Motion solver specifications (Laplacian)
 └── system/
+    └── blockMeshDict        # Parametric mesh geometry definition
     ├── controlDict          # Time-step and execution parameters
     ├── fvSchemes            # Discretization schemes for point displacement
     └── fvSolution           # Linear matrix solvers for mesh movement
