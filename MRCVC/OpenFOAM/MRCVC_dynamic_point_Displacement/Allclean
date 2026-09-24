@@ -1,0 +1,23 @@
+#!/bin/sh
+cd "${0%/*}" || exit 1    # Asegura ejecutar desde el directorio del script
+
+# Carga las funciones estándar de limpieza de OpenFOAM
+. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions
+
+# Limpia los directorios de tiempo de la simulación (mantiene el directorio 0)
+cleanTimeDirectories
+
+# Elimina archivos de log generados en ejecuciones anteriores
+cleanCase
+
+# Elimina la malla generada en constant/polyMesh (mantiene blockMeshDict)
+rm -rf constant/polyMesh/points \
+       constant/polyMesh/faces \
+       constant/polyMesh/owner \
+       constant/polyMesh/neighbour \
+       constant/polyMesh/boundary \
+       constant/polyMesh/cellZones \
+       constant/polyMesh/faceZones \
+       constant/polyMesh/pointZones \
+       constant/polyMesh/*Mesh*
+# -----------------------------------------------------------------------------

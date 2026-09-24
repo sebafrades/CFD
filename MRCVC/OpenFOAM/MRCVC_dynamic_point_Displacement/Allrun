@@ -1,0 +1,15 @@
+#!/bin/sh
+cd "${0%/*}" || exit 1    # Asegura ejecutar desde el directorio del script
+
+# Carga las funciones estándar de ejecución de OpenFOAM
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions
+
+# 1. Limpieza previa por seguridad
+runApplication Allclean
+
+# 2. Generación de la malla base
+runApplication blockMesh
+
+# 3. Ejecución de la deformación dinámica de la malla
+runApplication moveDynamicMesh
+
