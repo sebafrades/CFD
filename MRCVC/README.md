@@ -4,17 +4,30 @@ This directory contains the computational fluid dynamics (CFD) configurations, m
 
 ---
 
-## 📌 Engine History & Context
+## 📌 Engine History, Patent & Academic Context
 
-The **MRCVC** is a non-conventional internal combustion engine conceived and patented by Argentine inventor **Eduardo Antonio Fernández**. The engine's core design aims to achieve constant-volume thermodynamic combustion within a rotary architecture, offering high thermal efficiency, reduced mechanical complexity, and continuous rotary motion.
+The **MRCVC** is a novel internal combustion engine design invented and patented in Argentina by researcher **Jorge A. Toth**. 
 
-Currently, a **collaborative team of engineering students and faculty advisors** (including work developed within the Department of Applied Mechanics) is working on the numerical modeling, dynamic mesh validation, and physical simulation of the MRCVC to evaluate its internal flow physics, rotor motion constraints, and thermodynamic behavior.
+### 📜 Patent & Registration Details
+* **Inventor:** Jorge A. Toth
+* **Registry Body:** INPI (Instituto Nacional de la Propiedad Industrial), Argentina
+* **Application / File No.:** `P 19960105411` (Original filing in 1996)
+* **Patent Resolution:** `AR004806B1` (Definitively published in 2004)
+
+### 🏫 Research & Development
+The modeling, design, and optimization of this rotary engine have been actively investigated within the **Department of Applied Mechanics** at the **Faculty of Engineering, Universidad Nacional del Comahue** (Neuquén, Argentina), supported by computational simulations and academic collaboration involving **CONICET** researchers. A group of engineering students and faculty advisors continues to build upon this work to evaluate its physical viability.
+
+### 💡 Working Principle & Advantages
+Unlike conventional reciprocating piston engines or the Wankel rotary engine, Toth's design achieves **constant-volume (isochoric) combustion**. Theoretically, this provides key thermodynamic and mechanical benefits:
+* Higher thermal efficiency by reaching maximum thermodynamic availability.
+* Reduced specific fuel consumption.
+* Lower mechanical wear and reduced operational noise levels.
 
 ---
 
 ## 🔬 Current Work & Methodology
 
-Before coupling complex reacting flows or turbulence models, current efforts focus on **verifying dynamic mesh stability** under large boundary displacements using OpenFOAM:
+Before coupling complex reacting flows or turbulence models, current numerical efforts focus on **verifying dynamic mesh stability** under large boundary displacements using OpenFOAM:
 
 * **Parametric Mesh Generation:** The baseline 2D/3D geometry is constructed using `blockMeshDict`.
 * **Motion Modeling:** Boundary node movements along the chamber walls (`inlet` and `outlet` geometric boundaries) are defined through custom C++ displacement logic in `0/pointDisplacement`.
@@ -24,7 +37,7 @@ Before coupling complex reacting flows or turbulence models, current efforts foc
 
 ## 📂 Minimal Case Structure (Mesh Motion Testing)
 
-To keep the repository clean and efficient during this testing phase, only the essentials for running `moveDynamicMesh` are included:
+To keep the repository clean and lightweight during this testing phase, only the essentials required to execute `moveDynamicMesh` are included:
 
 ```text
 MRCVC/
