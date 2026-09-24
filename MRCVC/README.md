@@ -4,20 +4,20 @@ This directory contains the computational fluid dynamics (CFD) configurations, m
 
 ---
 
-## 📌 Engine History, Patent & Academic Context
+## Engine History, Patent & Academic Context
 
 The **MRCVC** is a novel internal combustion engine design invented and patented in Argentina by researcher **Jorge A. Toth**. 
 
-### 📜 Patent & Registration Details
+### Patent & Registration Details
 * **Inventor:** Jorge A. Toth
 * **Registry Body:** INPI (Instituto Nacional de la Propiedad Industrial), Argentina
 * **Application / File No.:** `P 19960105411` (Original filing in 1996)
 * **Patent Resolution:** `AR004806B1` (Definitively published in 2004)
 
-### 🏫 Research & Development
+### Research & Development
 The modeling, design, and optimization of this rotary engine have been actively investigated within the **Department of Applied Mechanics** at the **Faculty of Engineering, Universidad Nacional del Comahue** (Neuquén, Argentina), supported by computational simulations and academic collaboration involving **CONICET** researchers. A group of engineering students and faculty advisors continues to build upon this work to evaluate its physical viability.
 
-### 💡 Working Principle & Advantages
+### Working Principle & Advantages
 Unlike conventional reciprocating piston engines or the Wankel rotary engine, Toth's design achieves **constant-volume (isochoric) combustion**. Theoretically, this provides key thermodynamic and mechanical benefits:
 * Higher thermal efficiency by reaching maximum thermodynamic availability.
 * Reduced specific fuel consumption.
@@ -25,7 +25,7 @@ Unlike conventional reciprocating piston engines or the Wankel rotary engine, To
 
 ---
 
-## 🔬 Current Work & Methodology
+## Current Work & Methodology
 
 Before coupling complex reacting flows or turbulence models, current numerical efforts focus on **verifying dynamic mesh stability** under large boundary displacements using OpenFOAM:
 
