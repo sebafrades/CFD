@@ -1,4 +1,4 @@
-#include "mesh.hpp"
+#include "Finite_Differences_Mesh.hpp"
 
 constexpr int N = 65; // xi
 constexpr int M = 17; // eta
